@@ -37,7 +37,7 @@ function sortByValue() {
             return numA - numB;
         }
 
-        // Якщо не числа, порівнюємо текст
+
         return valueA.localeCompare(valueB);
     });
 }
@@ -49,6 +49,13 @@ function deleteSelected() {
 function sortList(compareFn) {
     const options = Array.from(pairList.options);
     options.sort((a, b) => compareFn(a.text, b.text));
-    pairList.innerHTML = ''; // Очищаємо список
-    options.forEach(option => pairList.add(option));
+    while (pairList.firstChild) {
+        pairList.removeChild(pairList.firstChild);
+    }
+    options.forEach(option => {
+        const newOption = document.createElement('option');
+        newOption.value = option.value;
+        newOption.textContent = option.textContent;
+        pairList.appendChild(newOption);
+    });
 }
